@@ -23,3 +23,5 @@ Divirta-se
 3. You can either create your own local image: `docker build -t <your-user>/codeeducation <Dockerfile relative path>` and execute by running `docker run --rm <your-user>/codeeducation`; or
 4. Run `docker run --rm desocupados/codeeducation`
 5. You should now see in your console: `Code.education Rocks!`
+
+You can also check out the [image in Docker Hub](https://hub.docker.com/repository/docker/desocupados/codeeducation)
