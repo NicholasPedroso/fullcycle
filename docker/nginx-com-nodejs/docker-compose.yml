@@ -1,14 +1,27 @@
 version: '3.9'
+
 services:
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    entrypoint: dockerize --wait tcp://app:3000 -timeout 20s ./docker-entrypoint.sh
+    ports: [8080:80]
+    command: ["nginx", "-g", "daemon off;"]
+    expose:
+      - 80
+    tty: true
+    depends_on:
+      - app
+    networks:
+      - appnet
+
   app:
     build:
       context: ./app
-      dockerfile: Dockerfile
     volumes:
       - ./app:/usr/local/app
-    image: desocupados/node-server
     container_name: app
-    ports: [3000:3000]
     depends_on:
       - db
     entrypoint: dockerize --wait tcp://db:3306 -timeout 10s docker-entrypoint.sh
@@ -17,7 +30,7 @@ services:
     expose:
       - 3000
     networks:
-      - app-network
+      - appnet
   db:
     container_name: db
     image: mysql
@@ -29,7 +42,8 @@ services:
     volumes: 
       - ./database:/docker-entrypoint-initdb.d
     networks:
-      - app-network
+      - appnet
+
 networks:
-  app-network:
+  appnet:
     driver: bridge
