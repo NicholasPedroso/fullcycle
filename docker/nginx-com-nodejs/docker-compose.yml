@@ -21,6 +21,7 @@ services:
       context: ./app
     volumes:
       - ./app:/usr/local/app
+      - /usr/local/app/node_modules/
     container_name: app
     depends_on:
       - db
