@@ -1,2 +1,3 @@
 - Add signature verification
 - Add other email to account
+- source .zshrc file
